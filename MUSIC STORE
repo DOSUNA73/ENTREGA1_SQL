@@ -1,0 +1,73 @@
+# ENTREGA1_SQL
+Script entrega 01 - SQL.
+
+CREATE SCHEMA MUSIC_STORE; 
+USE MUSIC_STORE;
+
+CREATE TABLE CLIENTE (
+idCliente INT NOT NULL AUTO_INCREMENT,
+Nombres VARCHAR (50),
+Apellidos VARCHAR (50), 
+Direccion VARCHAR (100),
+Telefono INT NOT NULL,
+Apertura_cuenta TIMESTAMP DEFAULT (CURRENT_DATE),
+PRIMARY KEY (IdCliente)) ; 
+
+CREATE TABLE EMPLEADO (
+idEmpleado INT NOT NULL auto_increment,
+Nombres VARCHAR (50),
+Apellidos VARCHAR (50),
+Direccion VARCHAR (100),
+Telefono INT ,
+PRIMARY KEY (idEmpleado)
+);
+
+CREATE TABLE PROVEEDOR (
+idProveedor INT NOT NULL auto_increment,
+Razon_Social VARCHAR  (100) not null, 
+Direccion VARCHAR  (50) null ,
+Telefono INT NOT NULL ,
+email VARCHAR (50) NULL, 
+PRIMARY KEY (idProveedor));
+
+CREATE TABLE PRODUCTO (
+idProducto INT NOT NULL auto_increment,
+Nombre_Producto VARCHAR (100) not null, 
+idProveedor int ,
+Modelo VARCHAR (200) NOT NULL ,
+Stock INT NOT NULL, 
+PRIMARY KEY (idProducto),
+FOREIGN KEY (idProveedor)
+REFERENCES PROVEEDOR (idProveedor));
+
+CREATE TABLE FACTURACION (
+idFacturacion INT NOT NULL AUTO_INCREMENT,
+idCliente INT ,
+idEmpleado INT ,
+idProveedor INT ,
+idProducto INT ,
+Fecha TIMESTAMP DEFAULT (CURRENT_DATE),
+PRIMARY KEY (idFacturacion),  
+FOREIGN KEY (idCliente)
+REFERENCES CLIENTE (idCliente),
+FOREIGN KEY (idEmpleado)
+REFERENCES EMPLEADO (idEmpleado),
+FOREIGN KEY (idProveedor)
+REFERENCES PROVEEDOR (idProveedor),
+FOREIGN KEY (idProducto)
+REFERENCES PRODUCTO (idProducto)
+);
+
+USE MUSIC_STORE; 
+
+CREATE TABLE LOG_MOVIMIENTO_CLIENTE (
+idLog_Cliente INT NOT NULL auto_increment, 
+Fecha DATETIME NOT NULL,
+UsuarioID VARCHAR (50) NOT NULL,
+idCliente INT NOT NULL,
+Nombres VARCHAR (50),
+Apellidos VARCHAR (50), 
+Direccion VARCHAR (100),
+Tipo_movimiento VARCHAR (100),
+PRIMARY KEY (idLog_Cliente)
+);
